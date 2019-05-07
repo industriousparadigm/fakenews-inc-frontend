@@ -2,28 +2,40 @@ const state = {
   x: 1
 }
 
+const url = 'http://localhost:3000/users/1'
+const url2 = 'http://localhost:3000/news/index'
+const url3 = 'http://localhost:3000/search/'
+
 const newsDiv = document.querySelector('#news-container')
 const userDiv = document.querySelector('#user-panel')
+const form = document.querySelector('.form-inline')
 
-const renderNewsBlock = (article) => {
+const getNews = () => fetch(url2)
+  .then(response => response.json())
+  .catch(error => alert(error))
+
+const searchNews = (term) => fetch(url3+term)
+  .then(response => response.json())
+  .then(data => renderNews(data))
+
+const renderNews = (news) => news.forEach(renderANews)
+
+const renderANews = (news) => {
   const newsBlock = document.createElement('div')
   newsBlock.className = "article-wrapper"
-  newsBlock.innerHTML = `    
-    <img src="${article.urlToImage}" />
+  newsBlock.innerHTML = `
+    <img src="${news.image}" />
     <div class="img-shadow text-center">
-      <p>${article.title}</p>
-      <p>${article.author}</p>
-    </div>
-  `
-  newsDiv.append(newsBlock)
+      <p>${news.title}</p>
+      <p>${news.published}</p>
+    </div>`
+  newsDiv.prepend(newsBlock)
 }
 
-const renderAllNews = () => {
-  articles.forEach(renderNewsBlock)
-}
+getNews().then(data => renderNews(data))
 
-const init = () => {
-  renderAllNews()
-}
-
-init()
+form.addEventListener('submit',(e)=>{
+  e.preventDefault()
+  searchNews(form.search.value)
+  form.reset()
+})
