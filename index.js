@@ -27,7 +27,7 @@ const renderANews = (news) => {
     <img src="${news.image}" />
     <div class="img-shadow text-center">
       <p>${news.title}</p>
-      <p>${news.published}</p>
+      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
     </div>`
   newsDiv.prepend(newsBlock)
 }
@@ -39,3 +39,11 @@ form.addEventListener('submit',(e)=>{
   searchNews(form.search.value)
   form.reset()
 })
+
+function openNav() {
+  document.getElementById("side-panel").style.width = "25vw";
+}
+
+function closeNav() {
+  document.getElementById("side-panel").style.width = "0";
+}
