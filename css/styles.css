@@ -8,7 +8,7 @@
 }
 
 #body-wrapper {
-  padding-top: 90px;
+  padding-top: 120px;
   display: flex;
   justify-content: space-around;
   width: 85%;
@@ -72,6 +72,13 @@
   margin: 30% 15% 15%;
   font-weight: 900;
   font-size: 2.5vw;
+  color: white;
+}
+
+.img-shadow span {
+  cursor: pointer;
+  font-size: 30px;
+  margin: 1vw;
 }
 
 .img-shadow p:nth-child(2) {
@@ -79,23 +86,16 @@
   font-size: 1.2vw;
 }
 
+#flag-span {
+  /* this should be top left of the img */
+  position: relative;
+  bottom: 0;
+  right: 0;
+}
+
 .article-wrapper:hover .img-shadow {
   visibility: visible;
   opacity: 1;
-}
-
-.icons {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-evenly;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.icons img {
-  position: relative;
-  width: 30px;
-  height: 30px;
 }
 
 #side-panel {
@@ -106,6 +106,14 @@
 
 #side-panel div {
   margin-bottom: 10vh;
+}
+
+#comment-panel {
+  width: 30%;
+  position: fixed;
+  margin-left: 30%;
+  background-color: white;
+  height: 100%;
 }
 
 .top-stories {
@@ -183,3 +191,59 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 } */
+
+/* COMMENTS THING BELOW */
+
+.detailBox {
+  border:0px solid #bbb;
+}
+.titleBox {
+  padding:10px;
+}
+.titleBox label{
+color:#444;
+margin:0px !important;
+display:inline-block;
+}
+
+.actionBox .form-group * {
+  width:100%;
+}
+.taskDescription {
+  margin-top:10px 0;
+}
+.commentList {
+  padding:0;
+  list-style: none;
+  height: 45vh;
+  overflow:auto;
+}
+.commentList li {
+  margin:0;
+  margin-top:10px;
+}
+.commentList li > div {
+  display:table-cell;
+}
+.commenterImage {
+  width:30px;
+  margin-right:5px;
+  height:100%;
+  float:left;
+}
+.commenterImage img {
+  width:100%;
+  border-radius:50%;
+}
+.commentText p {
+  margin:0;
+}
+.sub-text {
+  color:#aaa;
+  font-family:verdana;
+  font-size:11px;
+}
+.actionBox {
+  border-top:0px dotted #bbb;
+  /* padding:10px; */
+}
