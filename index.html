@@ -6,32 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Your own fake news!</title>
-  <!-- Font Awesome -->
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"> -->
   <!-- Bootstrap core CSS -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
-  <link href="MDB/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
-  <link href="MDB/css/mdb.min.css" rel="stylesheet">
+  <link href="css/mdb.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/0.4.2/css/mdui.min.css" />
   <!-- Your custom styles (optional) -->
-  <!-- <link href="MDB/css/style.css" rel="stylesheet"> -->
   <link href="css/styles.css" rel="stylesheet">
   <script defer src="index.js"></script>
 </head>
 
 <body>
   <!--Navbar -->
-  <nav id="menu-bar" class="mb-1 navbar navbar-expand-lg navbar-dark orange lighten-1 fixed-top">
-    <a class="navbar-brand" href="#">Fakenews Inc.</a>
+  <nav class="mb-1 navbar navbar-expand-lg navbar-dark orange lighten-1">
+    <a class="navbar-brand" onclick="renderNews(state.news)">Fakenews Inc.</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
       aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
-      <ul class="navbar-nav mr-auto">
-
-      </ul>
-
       <form class="form-inline">
         <div class="md-form my-0">
           <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Search">
@@ -39,14 +32,14 @@
       </form>
     </div>
 
-    <ul class="navbar-nav ml-auto nav-flex-icons">
-      <li class="nav-item avatar">
-        <a class="nav-link p-0">
-          <img src="https://www.designskilz.com/random-users/images/imageF35.jpg" class="rounded-circle z-depth-0"
-            alt="avatar image" height="35">
-        </a>
-      </li>
-    </ul>
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+        <li class="nav-item avatar">
+          <a class="nav-link p-0" onclick="renderNews(state.myNews)">
+            <img src="https://www.designskilz.com/random-users/images/imageF35.jpg" class="rounded-circle z-depth-0"
+              alt="avatar image" height="35">
+          </a>
+        </li>
+      </ul>
     </div>
   </nav>
   <!--/.Navbar -->
