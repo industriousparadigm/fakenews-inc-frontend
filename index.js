@@ -58,9 +58,11 @@ const renderANews = (news) => {
   newsBlock.innerHTML = `
     <img src="${news.image}" />
     <div class="img-shadow text-center">
-      <p>${news.title}</p>
-      <span style="font-size:30px;cursor:pointer" onclick="likeNews(${news.id})">&#9786</span>
-      <span style="font-size:30px;cursor:pointer" onclick="dislikeNews(${news.id})">&#9785</span>
+      <p><a class="text-white" href="${news.source}" target="none">${news.title}</a></p>
+      <span style="font-size:30px;cursor:pointer" onclick="likeNews(${news.id})">&#128515</span>
+      <span style="font-size:30px;cursor:pointer" onclick="dislikeNews(${news.id})">&#128545</span>
+      <span class="flag-span" style="font-size:30px;cursor:pointer" onclick="flagNews(${news.id})">&#9971</span>
+      <p><span class="" style="font-size:50px;cursor:pointer" onclick="openComments(${news.id})">&#128172</span></p>
     </div>`
   newsDiv.prepend(newsBlock)
 }

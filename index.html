@@ -18,7 +18,7 @@
 
 <body>
   <!--Navbar -->
-  <nav class="mb-1 navbar navbar-expand-lg navbar-dark orange lighten-1">
+  <nav id="menu-bar" class="mb-1 navbar navbar-expand-lg navbar-dark orange lighten-1 fixed-top">
     <a class="navbar-brand" onclick="renderNews(state.news)">Fakenews Inc.</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
       aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,56 @@
 
     </div>
 
-  </div>
+    <div id="comment-panel">
+      <div class="detailBox">
+        <div class="titleBox">
+          <label class="category">comments</label>
+          <button type="button" class="close" aria-hidden="true">&times;</button>
+        </div>
+        <div class="actionBox">
+          <ul class="commentList">
+            <!-- <li>
+              <div class="commenterImage">
+                <img src="http://placekitten.com/50/50" />
+              </div>
+              <div class="commentText">
+                <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+              </div>
+            </li>
+            <li>
+              <div class="commenterImage">
+                <img src="http://placekitten.com/45/45" />
+              </div>
+              <div class="commentText">
+                <p class="">Hello this is a test comment and this comment is particularly very long and it goes on and
+                  on and on.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+              </div>
+            </li>
+            <li>
+              <div class="commenterImage">
+                <img src="http://placekitten.com/40/40" />
+              </div>
+              <div class="commentText">
+                <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
+
+              </div>
+            </li> -->
+          </ul>
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <input class="form-control" type="text" placeholder="comment" />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-light z-depth-0">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+      </div>
 
   <footer>
     <!-- <h6>All rights reserved Oli + D</h6> -->
