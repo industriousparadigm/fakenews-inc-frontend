@@ -74,9 +74,10 @@ getNews(all_news_url).then(data => {
   renderNews(state.news)
 })
 
-form.addEventListener('change',(e)=>{
-  e.preventDefault()
+form.addEventListener('keydown',(e)=>{
   if (form.search.value != '') {
+    const articles = document.querySelectorAll('.article-wrapper')
+    articles.forEach((article)=>article.remove())
     searchNews(form.search.value)
   } else {
     renderNews(state.news)
