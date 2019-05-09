@@ -11,19 +11,10 @@ const all_news_url = 'http://localhost:3000/news/index'
 const search_url = 'http://localhost:3000/search/'
 
 const newsDiv = document.querySelector('#news-container')
+const sidePanel = document.querySelector('#side-panel')
 const form = document.querySelector('.form-inline')
 
-<<<<<<< HEAD
-const sidePanel = document.querySelector('#side-panel')
-
-const trendingNews = sidePanel.querySelector("#trending .top-stories")
-const controversialNews = sidePanel.querySelector("#controversial .top-stories")
-const newNews = sidePanel.querySelector("#new .top-stories")
-
-const getNews = () => fetch(url2)
-=======
 const getNews = (url) => fetch(url)
->>>>>>> origin/dis-like
   .then(response => response.json())
   .catch(error => alert(error))
 
@@ -61,25 +52,19 @@ const dislikeNews = (id) => {
   patchNews(obj)
 }
 
-const renderANews = (aNews) => {
+const renderANews = (news) => {
   const newsBlock = document.createElement('div')
   newsBlock.className = "article-wrapper"
   newsBlock.innerHTML = `
-    <img src="${aNews.image}" />
+    <img src="${news.image}" />
     <div class="img-shadow text-center">
-<<<<<<< HEAD
-      <p>${aNews.title}</p>
-      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-=======
       <p>${news.title}</p>
       <span style="font-size:30px;cursor:pointer" onclick="likeNews(${news.id})">&#9786</span>
       <span style="font-size:30px;cursor:pointer" onclick="dislikeNews(${news.id})">&#9785</span>
->>>>>>> origin/dis-like
     </div>`
   newsDiv.prepend(newsBlock)
 }
 
-<<<<<<< HEAD
 const renderASideNews = (aNews, parentElementId) => {
   const newsImg = document.createElement('img')
   newsImg.src = aNews.image
@@ -87,20 +72,9 @@ const renderASideNews = (aNews, parentElementId) => {
   sidePanel.querySelector(`#${parentElementId} .top-stories`).prepend(newsImg)
 }
 
-const populateSideNews = () => {
-  const news = Array(9)
-  news.map(element => randomImgUrl(90))
-  console.log(news)
-  return news
-}
-
 const randomImgUrl = (width, height = width) => {
   return fetch(`https://picsum.photos/${width}/${height}`).then(resp => resp.url)
 }
-
-getNews().then(data => {
-  renderNews(data)
-})
 
 for (let i = 0; i < 3; i++) {
   let codes = ["trending", "controversial", "new"]
@@ -109,20 +83,12 @@ for (let i = 0; i < 3; i++) {
   }
 }
 
-form.addEventListener('submit',(e)=>{
-  e.preventDefault()
-  searchNews(form.search.value)
-  form.reset()
-=======
 // Init
-
 getNews(my_news_url).then(data => state.myNews = data)
-
 getNews(all_news_url).then(data => {
   state.news = data
   renderNews(state.news)
 })
-
 form.addEventListener('keydown',(e)=>{
   if (form.search.value != '') {
     const articles = document.querySelectorAll('.article-wrapper')
@@ -131,5 +97,5 @@ form.addEventListener('keydown',(e)=>{
   } else {
     renderNews(state.news)
   }
->>>>>>> origin/dis-like
 })
+
