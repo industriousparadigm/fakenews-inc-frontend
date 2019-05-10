@@ -25,19 +25,29 @@
       aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+    <div id="navbarSupportedContent-555">
       <form class="form-inline">
         <div class="md-form my-0">
-          <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Search">
+          <input id="form-autocomplete" class="mr-sm-2 form-control mdb-autocomplete" name="search" type="search"
+            placeholder="search" aria-label="Search">
         </div>
       </form>
     </div>
-
+    <div id="pwd" hidden>
+      <form id="pwd-form" class="form-inline">
+        <div class="md-form my-0">
+          <input id="form-autocomplete" class="mr-sm-2 form-control mdb-autocomplete" name="email" type="text"
+            placeholder="email" aria-label="login">
+        </div>
+      </form>
+    </div>
+    </div>
+    <div id="navbarSupportedContent-555"></div>
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item avatar">
-        <a class="nav-link p-0" onclick="renderNews(state.myNews)">
-          <img id="avatar" src="images/Blank-avatar.png" class="rounded-circle z-depth-0"
-            alt="avatar image" height="35">
+        <a id='nav-avatar' class="nav-link p-0">
+          <img id="avatar" src="images/Blank-avatar.png" class="rounded-circle z-depth-0" alt="avatar image"
+            height="35">
         </a>
       </li>
     </ul>
