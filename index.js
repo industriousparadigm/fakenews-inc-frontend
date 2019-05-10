@@ -5,14 +5,21 @@ const state = {
   selected: null
 }
 
+// URLs ::
+
 const my_news_url = `http://localhost:3000/users/${state.user}`
 const news_url = `http://localhost:3000/news`
 const search_url = 'http://localhost:3000/search/'
 
+// Selectors ::
+
 const newsDiv = document.querySelector('#news-container')
 const sidePanel = document.querySelector('#side-panel')
 const form = document.querySelector('.form-inline')
-const comment = document.querySelector('.commentList')
+const comment = document.querySelector('ul.commentList')
+const commentPanel = document.querySelector('div#comment-panel')
+
+// API ::
 
 const getNews = (url) => fetch(url)
   .then(response => response.json())
@@ -34,10 +41,13 @@ const searchNews = (term) => fetch(search_url + term)
   .then(response => response.json())
   .then(data => renderNews(data))
 
-const renderNews = (news) => {
-  newsDiv.innerHTML = ''
-  news.forEach(renderANews)
-}
+const postComment = (com) => fetch(news_url + '/' + like.news_id,{
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(com)
+})
+
+  // Social ::
 
 const likeNews = (id) => {
   const obj = {
@@ -67,53 +77,99 @@ const reportNews = (id) => {
   patchNews(obj)
 }
 
-const renderComment = (comment) => {
-  const pane = document.querySelector('ul.commentList')
+// DOM ::
+
+const renderComment = (com) => {
   const li = document.createElement('li')
   li.innerHTML = `
   <div class="commenterImage">
-    ${comment.user_id}
-    <img src="">
+    <img src="http://placekitten.com/50/50">
   </div>
   <div class="commentText">
-    <p class="">${comment.content}</p>
-    <span class="date sub-text">${comment.created_at}</span>
+    <p class="">${com.content}</p>
+    <span class="date sub-text">${com.created_at}</span>
   </div>`
-  pane.append(li)
+  comment.append(li)
 }
 
-const renderComments = (news) => news.comments.forEach(renderComment)
+const renderComments = (news) => {
+  const form = document.querySelector('form#cmt')
+  commentPanel.hidden = false
+  comment.innerHTML = ``
+  news.comments.forEach(renderComment)
+  commentPanel.addEventListener('click',(e)=>{
+    e.preventDefault()
+    const cmtId = e.target.id
+      if (cmtId === 'cmt-btn' && form.comment.value != ''){
+        const com = {
+          new_id: news.id,
+          user_id: state.user,
+          content: form.comment.value,
+          created_at: Date.now()
+        }
+        renderComment(com)
+        state.news.find((e) => e.id === news.id).comments.push(com)
+        postComment(com)
+      } if (cmtId === 'cmt-cls'){
+        commentPanel.hidden = true
+      }
+  })
+
+}
+
+const renderTrend = (trend) => {
+  const img = document.createElement('img')
+  img.src = trend.image
+  sidePanel.querySelector('#trending').append(img)
+}
+
+const renderControvosy = (controvosy) =>{
+  const img = document.createElement('img')
+  img.src = controvosy.image
+  sidePanel.querySelector('#controvosy').append(img)
+}
 
 const renderANews = (news) => {
 
   const newsBlock = document.createElement('div')
   const likeCount = news.reacts.filter((r)=>r.like == true).length
+  const disCount = news.reacts.filter((r)=>r.like == false).length
+  const comCount = news.comments.length
+
   newsBlock.className = "article-wrapper"
   newsBlock.innerHTML = `
     <img src="${news.image}" />
     <div class="img-shadow text-center">
       <p>${news.title}</p>
-      <span id="like"> ${likeCount}♡ </span>
-      <span id="dislike"> ✗ </span>
-      <span id="report"> ! </span>
-      <span id="comment"> @ </span>
-    </div>`
+      <span id="like"> ♡ </span>
+      <span id="dislike"> 💢 </span>
+      <span id="report"> &#9760; </span>
+      <span id="comment">&#128172</span>
+    </div>
+    <em>likes: ${likeCount} angry: ${disCount} comments: ${comCount}</em>`
     newsBlock.addEventListener('click',(e)=>{
-      const id = e.target.id
-      if (id === "like") {
+      const artId = e.target.id
+      if (artId === "like") {
         likeNews(news.id)
-      }  if (id === "dislike") {
+      }  if (artId === "dislike") {
         dislikeNews(news.id)
-      }  if (id === "report") {
+      }  if (artId === "report") {
         reportNews(news.id)
-      }  if (id === "comment") {
-        renderComments(news)
+      }  if (artId === "comment") {
+        renderComments(state.news.find((e) => e.id === news.id))
       }
     })
   newsDiv.prepend(newsBlock)
+  inView.offset(300)
+  inView('.article-wrapper').on('exit', ()=>commentPanel.hidden = true)
 }
 
-// Viewport Listener
+const renderNews = (news) => {
+  newsDiv.innerHTML = ''
+  news.forEach(renderANews)
+}
+
+// Listeners ::
 
 form.addEventListener('keypress', (e) => {
   if (form.search.value != '') {
@@ -125,7 +181,7 @@ form.addEventListener('keypress', (e) => {
   }
 })
 
-// Init
+// Initialize ::
 
 getNews(my_news_url).then(data => state.myNews = data)
 
@@ -134,4 +190,7 @@ getNews(news_url).then(data => {
   renderNews(state.news)
 })
 
-getMeta().then(console.log)
+getMeta().then(data => {
+  data.trending.forEach(renderTrend)
+  data.controvosy.forEach(renderControvosy)
+})

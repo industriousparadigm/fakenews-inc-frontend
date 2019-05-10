@@ -10,15 +10,16 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Bootstrap -->
   <link href="css/mdb.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/0.4.2/css/mdui.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/0.4.2/css/mdui.min.css">
   <!-- Your custom styles (optional) -->
   <link href="css/styles.css" rel="stylesheet">
+  <script defer src="in-view.min.js"></script>
   <script defer src="index.js"></script>
 </head>
 
 <body>
   <!--Navbar -->
-  <nav id="menu-bar" class="mb-1 navbar navbar-expand-lg navbar-dark orange lighten-1 fixed-top">
+  <nav id="menu-bar" class="mb-1 navbar navbar-expand-lg navbar-dark orange fixed-top">
     <a class="navbar-brand" onclick="renderNews(state.news)">Fakenews Inc.</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
       aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,14 +33,14 @@
       </form>
     </div>
 
-      <ul class="navbar-nav ml-auto nav-flex-icons">
-        <li class="nav-item avatar">
-          <a class="nav-link p-0" onclick="renderNews(state.myNews)">
-            <img src="https://www.designskilz.com/random-users/images/imageF35.jpg" class="rounded-circle z-depth-0"
-              alt="avatar image" height="35">
-          </a>
-        </li>
-      </ul>
+    <ul class="navbar-nav ml-auto nav-flex-icons">
+      <li class="nav-item avatar">
+        <a class="nav-link p-0" onclick="renderNews(state.myNews)">
+          <img src="https://www.designskilz.com/random-users/images/imageF35.jpg" class="rounded-circle z-depth-0"
+            alt="avatar image" height="35">
+        </a>
+      </li>
+    </ul>
     </div>
   </nav>
   <!--/.Navbar -->
@@ -47,100 +48,44 @@
   <div id="body-wrapper" class="">
     <div id="news-container" class="">
 
-      <!-- 
-      <div class="article-wrapper">
-        <img src="images/littleDuck.jpg">
-        <div class="img-shadow text-center">
-          <p>Ice cream trucks hijacked by pranksters and used to distribute free pizza to the needy</p>
-          <p>Danny Crichton</p>
-          <div class="icons">
-            <img class="like-btn" src="images/happyFace.png">
-            <img class="dislike-btn" src="images/sadFace.png">
-            <img class="flag-btn" src="images/flag.png">
-          </div>
-        </div>
-      </div> -->
-
     </div>
-
-
-
-
-
     <div id="side-panel" class="">
-      <div id="trending">
+      <div>
         <h3 class="category">Trending</h3>
-        <div class="top-stories d-flex">
+        <div id="trending" class="top-stories d-flex">
 
         </div>
       </div>
-
-      <div id="controversial">
+      <div>
         <h3 class="category">Controversial</h3>
-        <div class="top-stories d-flex">
+        <div id="controvosy" class="top-stories d-flex">
 
         </div>
       </div>
-
-      <div id="new">
-        <h3 class="category">New</h3>
-        <div class="top-stories d-flex">
-
-        </div>
-      </div>
-
     </div>
 
-    <div id="comment-panel">
+    <div id="comment-panel" hidden>
       <div class="detailBox">
         <div class="titleBox">
           <label class="category">comments</label>
-          <button type="button" class="close" aria-hidden="true">&times;</button>
+          <button id="cmt-cls" type="button" class="close" aria-hidden="true">&times;</button>
         </div>
         <div class="actionBox">
           <ul class="commentList">
-            <!-- <li>
-              <div class="commenterImage">
-                <img src="http://placekitten.com/50/50" />
-              </div>
-              <div class="commentText">
-                <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
 
-              </div>
-            </li>
-            <li>
-              <div class="commenterImage">
-                <img src="http://placekitten.com/45/45" />
-              </div>
-              <div class="commentText">
-                <p class="">Hello this is a test comment and this comment is particularly very long and it goes on and
-                  on and on.</p> <span class="date sub-text">on March 5th, 2014</span>
-
-              </div>
-            </li>
-            <li>
-              <div class="commenterImage">
-                <img src="http://placekitten.com/40/40" />
-              </div>
-              <div class="commentText">
-                <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
-
-              </div>
-            </li> -->
           </ul>
-          <form class="form-inline" role="form">
+          <form id="cmt" class="form-inline" role="form">
             <div class="form-group">
-              <input class="form-control" type="text" placeholder="comment" />
+              <input name="comment" class="form-control" type="text" placeholder="comment" />
             </div>
             <div class="form-group">
-              <button class="btn btn-light z-depth-0">Add</button>
+              <button id="cmt-btn" class="btn btn-light z-depth-0">Ok</button>
             </div>
           </form>
         </div>
       </div>
     </div>
-
-      </div>
+  </div>
 
   <footer>
     <!-- <h6>All rights reserved Oli + D</h6> -->
