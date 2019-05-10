@@ -1,5 +1,5 @@
 const state = {
-  user: 1,
+  user: null,
   news: [],
   myNews: [],
   selected: null
@@ -18,7 +18,7 @@ const sidePanel = document.querySelector('#side-panel')
 const form = document.querySelector('.form-inline')
 const comment = document.querySelector('ul.commentList')
 const commentPanel = document.querySelector('div#comment-panel')
-const navBar = document.querySelector('nav#menu-bar')
+const aNav = document.querySelector('a#nav-avatar')
 
 // API ::
 
@@ -78,7 +78,13 @@ const reportNews = (id) => {
   patchNews(obj)
 }
 
-const logIn = () => state.user !== null
+// SEC ::
+
+const loggedIn = () => state.user !== null
+
+const logIn = () => {
+
+}
 
 // DOM ::
 
@@ -120,29 +126,6 @@ const renderComments = (news) => {
   close.addEventListener('click',()=>commentPanel.hidden = true)
 
   }
-
-function listen(e, form, commentPanel, news){
-  console.log('asdf')
-  e.preventDefault()
-  e.stopPropagation()
-  const cmtId = e.target.id
-    if (cmtId === 'cmt-btn' && form.comment.value != ''){
-      const com = {
-        new_id: news.id,
-        user_id: state.user,
-        content: form.comment.value,
-        created_at: Date.now()
-      }
-      renderComment(com)
-      state.news.find((e) => e.id === news.id).comments.push(com)
-      postComment(com)
-    }
-     if (cmtId === 'cmt-cls'){
-      commentPanel.hidden = true
-    }
-    commentPanel.removeEventListener("click", listen, false)
-
-}
 
 const renderTrend = (trend) => {
   const img = document.createElement('img')
@@ -208,7 +191,7 @@ form.addEventListener('keypress', (e) => {
   }
 })
 
-
+aNav.addEventListener('click', ()=>loggedIn ? getNews(my_news_url).then(renderNews) : logIn())
 
 // Initialize ::
 
