@@ -10,6 +10,7 @@ const state = {
 const my_news_url = `http://localhost:3000/users/${state.user}`
 const news_url = `http://localhost:3000/news`
 const search_url = 'http://localhost:3000/search/'
+const login_url = 'http://localhost:3000/users'
 
 // Selectors ::
 
@@ -19,6 +20,7 @@ const form = document.querySelector('.form-inline')
 const comment = document.querySelector('ul.commentList')
 const commentPanel = document.querySelector('div#comment-panel')
 const aNav = document.querySelector('a#nav-avatar')
+const pwdDiv = document.querySelector('#pwd')
 
 // API ::
 
@@ -47,6 +49,12 @@ const postComment = (com) => fetch(news_url + '/' + like.news_id,{
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify(com)
 })
+
+const postUser = (email) => fetch(login_url,{
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({email: email})
+}).then(r => r.json())
 
   // Social ::
 
@@ -82,8 +90,25 @@ const reportNews = (id) => {
 
 const loggedIn = () => state.user !== null
 
-const logIn = () => {
+const generateAvatar = () => {
+  fetch("https://randomuser.me/api/?inc=picture&noinfo")
+    .then(resp => resp.json())
+    .then(p => {
+      document.querySelector("#avatar").src = p.results[0].picture.large
+    })
+ }
 
+const logIn = () => {
+  pwdDiv.hidden = false
+  const form = document.querySelector('#pwd-form')
+  form.addEventListener ('submit',(e)=>{
+    e.preventDefault()
+    postUser(form.email.value).then(data => {
+      state.user = parseInt(data.id,10)
+      pwdDiv.hidden = true
+      generateAvatar()
+    })
+  })
 }
 
 // DOM ::
@@ -191,7 +216,11 @@ form.addEventListener('keypress', (e) => {
   }
 })
 
-aNav.addEventListener('click', ()=>loggedIn ? getNews(my_news_url).then(renderNews) : logIn())
+aNav.addEventListener('click', ()=> {
+  if (loggedIn() == true) {
+    getNews(my_news_url).then(console.log)
+   } else { logIn() }
+  })
 
 // Initialize ::
 
