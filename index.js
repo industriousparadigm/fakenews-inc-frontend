@@ -2,7 +2,8 @@ const state = {
   user: 1,
   news: [],
   myNews: [],
-  selected: null
+  selected: null,
+  currentNewsDiv: null
 }
 
 // URLs ::
@@ -99,6 +100,9 @@ const renderComments = (news) => {
   const form = document.querySelector('form#cmt')
   commentPanel.hidden = false
   comment.innerHTML = ``
+  let likeCount = news.reacts.filter((r)=>r.like == true).length
+  let disCount = news.reacts.filter((r)=>r.like == false).length
+  let comCount = news.comments.length
   news.comments.forEach(renderComment)
   const div = form.querySelector('#cmt-post')
   div.innerHTML=`<button id="cmt-btn" class="btn btn-light z-depth-0">Ok</button>`
@@ -115,33 +119,19 @@ const renderComments = (news) => {
     renderComment(com)
     state.news.find((e) => e.id === news.id).comments.push(com)
     postComment(com)
+    updateComCount()
+    form.reset()
   })
   const close = document.querySelector('#cmt-cls')
-  close.addEventListener('click',()=>commentPanel.hidden = true)
+  close.addEventListener('click',()=> {
+    state.currentNewsDiv = null
+    commentPanel.hidden = true
+  })
 
+  const updateComCount = () => {
+    comCount++
+    state.currentNewsDiv.querySelector(".article-stats").innerHTML = `likes: ${likeCount} angry: ${disCount} comments: ${comCount}`
   }
-
-function listen(e, form, commentPanel, news){
-  console.log('asdf')
-  e.preventDefault()
-  e.stopPropagation()
-  const cmtId = e.target.id
-    if (cmtId === 'cmt-btn' && form.comment.value != ''){
-      const com = {
-        new_id: news.id,
-        user_id: state.user,
-        content: form.comment.value,
-        created_at: Date.now()
-      }
-      renderComment(com)
-      state.news.find((e) => e.id === news.id).comments.push(com)
-      postComment(com)
-    }
-     if (cmtId === 'cmt-cls'){
-      commentPanel.hidden = true
-    }
-    commentPanel.removeEventListener("click", listen, false)
-
 }
 
 const renderTrend = (trend) => {
@@ -159,36 +149,58 @@ const renderControvosy = (controvosy) =>{
 const renderANews = (news) => {
 
   const newsBlock = document.createElement('div')
-  const likeCount = news.reacts.filter((r)=>r.like == true).length
-  const disCount = news.reacts.filter((r)=>r.like == false).length
-  const comCount = news.comments.length
+  let likeCount = news.reacts.filter((r)=>r.like == true).length
+  let disCount = news.reacts.filter((r)=>r.like == false).length
+  let comCount = news.comments.length
 
   newsBlock.className = "article-wrapper"
   newsBlock.innerHTML = `
     <img src="${news.image}" />
     <div class="img-shadow text-center">
-      <p>${news.title}</p>
+      <p><a href="${news.source}" target="none">${news.title}</a></p>
       <span id="like"> ♡ </span>
       <span id="dislike"> 💢 </span>
       <span id="report"> &#9760; </span>
       <span id="comment">&#128172</span>
+      <div class="article-stats text-center">likes: ${likeCount} angry: ${disCount} comments: ${comCount}</div>
     </div>
-    <em>likes: ${likeCount} angry: ${disCount} comments: ${comCount}</em>`
+    `
+
+    const countersDiv = newsBlock.querySelector(".article-stats")
+
     newsBlock.addEventListener('click',(e)=>{
       const artId = e.target.id
       if (artId === "like") {
         likeNews(news.id)
+        updateLikeCount()
       }  if (artId === "dislike") {
         dislikeNews(news.id)
+        updateDisCount()
       }  if (artId === "report") {
         reportNews(news.id)
       }  if (artId === "comment") {
         renderComments(state.news.find((e) => e.id === news.id))
+        state.currentNewsDiv = newsBlock
       }
     })
   newsDiv.prepend(newsBlock)
   inView.offset(300)
-  inView('.article-wrapper').on('exit', ()=>commentPanel.hidden = true)
+  inView('.article-wrapper').on('exit', ()=> {
+    state.currentNewsDiv = null
+    commentPanel.hidden = true
+  })
+
+  const updateLikeCount = () => {
+    comCount = news.comments.length
+    likeCount++
+    countersDiv.innerHTML = `likes: ${likeCount} angry: ${disCount} comments: ${comCount}`
+  }
+
+  const updateDisCount = () => {
+    comCount = news.comments.length
+    disCount++
+    countersDiv.innerHTML = `likes: ${likeCount} angry: ${disCount} comments: ${comCount}`
+  }
 }
 
 const renderNews = (news) => {

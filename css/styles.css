@@ -3,6 +3,10 @@
   border: 1px dashed;
 } */
 
+a { color: #fff; }
+a:hover { color: #ddd }
+
+
 #menu-bar {
   box-shadow: none;
 }
@@ -85,6 +89,12 @@
 .img-shadow p:nth-child(2) {
   margin: 15% 10%;
   font-size: 1.2vw;
+}
+
+.img-shadow div.article-stats {
+  position: absolute;
+  bottom: 0px;
+  font-weight: bolder;
 }
 
 #flag-span {
