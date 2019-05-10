@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/0.4.2/css/mdui.min.css">
   <!-- Your custom styles (optional) -->
   <link href="css/styles.css" rel="stylesheet">
-  <script defer src="in-view.min.js"></script>
+  <script src="img-random.js"></script>
+  <script src="in-view.min.js"></script>
   <script defer src="index.js"></script>
 </head>
 
@@ -36,7 +37,7 @@
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item avatar">
         <a class="nav-link p-0" onclick="renderNews(state.myNews)">
-          <img src="https://www.designskilz.com/random-users/images/imageF35.jpg" class="rounded-circle z-depth-0"
+          <img id="avatar" src="https://www.designskilz.com/random-users/images/imageF35.jpg" class="rounded-circle z-depth-0"
             alt="avatar image" height="35">
         </a>
       </li>
