@@ -18,6 +18,7 @@ const sidePanel = document.querySelector('#side-panel')
 const form = document.querySelector('.form-inline')
 const comment = document.querySelector('ul.commentList')
 const commentPanel = document.querySelector('div#comment-panel')
+const navBar = document.querySelector('nav#menu-bar')
 
 // API ::
 
@@ -77,6 +78,8 @@ const reportNews = (id) => {
   patchNews(obj)
 }
 
+const logIn = () => state.user !== null
+
 // DOM ::
 
 const renderComment = (com) => {
@@ -97,23 +100,47 @@ const renderComments = (news) => {
   commentPanel.hidden = false
   comment.innerHTML = ``
   news.comments.forEach(renderComment)
-  commentPanel.addEventListener('click',(e)=>{
+  const div = form.querySelector('#cmt-post')
+  div.innerHTML=`<button id="cmt-btn" class="btn btn-light z-depth-0">Ok</button>`
+  const button = document.querySelector('#cmt-btn')
+  button.addEventListener('click',(e) => {
     e.preventDefault()
-    const cmtId = e.target.id
-      if (cmtId === 'cmt-btn' && form.comment.value != ''){
-        const com = {
-          new_id: news.id,
-          user_id: state.user,
-          content: form.comment.value,
-          created_at: Date.now()
-        }
-        renderComment(com)
-        state.news.find((e) => e.id === news.id).comments.push(com)
-        postComment(com)
-      } if (cmtId === 'cmt-cls'){
-        commentPanel.hidden = true
-      }
+    e.stopPropagation()
+    const com = {
+      new_id: news.id,
+      user_id: state.user,
+      content: form.comment.value,
+      created_at: Date.now()
+    }
+    renderComment(com)
+    state.news.find((e) => e.id === news.id).comments.push(com)
+    postComment(com)
   })
+  const close = document.querySelector('#cmt-cls')
+  close.addEventListener('click',()=>commentPanel.hidden = true)
+
+  }
+
+function listen(e, form, commentPanel, news){
+  console.log('asdf')
+  e.preventDefault()
+  e.stopPropagation()
+  const cmtId = e.target.id
+    if (cmtId === 'cmt-btn' && form.comment.value != ''){
+      const com = {
+        new_id: news.id,
+        user_id: state.user,
+        content: form.comment.value,
+        created_at: Date.now()
+      }
+      renderComment(com)
+      state.news.find((e) => e.id === news.id).comments.push(com)
+      postComment(com)
+    }
+     if (cmtId === 'cmt-cls'){
+      commentPanel.hidden = true
+    }
+    commentPanel.removeEventListener("click", listen, false)
 
 }
 
@@ -181,9 +208,9 @@ form.addEventListener('keypress', (e) => {
   }
 })
 
-// Initialize ::
 
-getNews(my_news_url).then(data => state.myNews = data)
+
+// Initialize ::
 
 getNews(news_url).then(data => {
   state.news = data
