@@ -100,9 +100,26 @@ const renderComments = (news) => {
   commentPanel.hidden = false
   comment.innerHTML = ``
   news.comments.forEach(renderComment)
-  commentPanel.addEventListener('click', (e) => listen(e, form, commentPanel, news))
+  const div = form.querySelector('#cmt-post')
+  div.innerHTML=`<button id="cmt-btn" class="btn btn-light z-depth-0">Ok</button>`
+  const button = document.querySelector('#cmt-btn')
+  button.addEventListener('click',(e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const com = {
+      new_id: news.id,
+      user_id: state.user,
+      content: form.comment.value,
+      created_at: Date.now()
+    }
+    renderComment(com)
+    state.news.find((e) => e.id === news.id).comments.push(com)
+    postComment(com)
+  })
+  const close = document.querySelector('#cmt-cls')
+  close.addEventListener('click',()=>commentPanel.hidden = true)
 
-}
+  }
 
 function listen(e, form, commentPanel, news){
   console.log('asdf')
